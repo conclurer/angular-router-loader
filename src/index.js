@@ -6,7 +6,7 @@ module.exports = function(source, sourcemap) {
   this.cacheable && this.cacheable();
 
   // regex for loadChildren string
-  var loadChildrenRegex = /loadChildren[\s]*:[\s]*['|"](.*?)['|"]/gm;
+  var loadChildrenRegex = /factoryPath[\s]*:[\s]*['|"](.*?)['|"]/gm;
 
   // parse query params
   var query = loaderUtils.getOptions(this) || {};
@@ -84,21 +84,13 @@ module.exports = function(source, sourcemap) {
 
     filePath = utils.normalizeFilePath(filePath, isRelativePath);
 
-    var replacement = match;
-
-    if (sync) {
-      replacement = utils.getSyncLoader(filePath, moduleName, inline);
-    } else if (loader === 'system') {
-      replacement = utils.getSystemLoader(filePath, moduleName, inline);
-    } else {
-      replacement = utils.getRequireLoader(filePath, chunkName, moduleName, inline, isJs);
-    }
+    var replacement = utils.getSystemLoader(filePath, moduleName, inline);
 
     if (debug) {
-      console.log('[angular-router-loader]: --DEBUG--');
-      console.log('[angular-router-loader]: File: ' + resourcePath);
-      console.log('[angular-router-loader]: Original: ' + match);
-      console.log('[angular-router-loader]: Replacement: ' + replacement);
+      console.log('[edelog-component-factory-loader]: --DEBUG--');
+      console.log('[edelog-component-factory-loader]: File: ' + resourcePath);
+      console.log('[edelog-component-factory-loader]: Original: ' + match);
+      console.log('[edelog-component-factory-loader]: Replacement: ' + replacement);
     }
 
     return replacement;
